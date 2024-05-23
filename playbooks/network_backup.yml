@@ -30,3 +30,9 @@
         mode: "644"
       when: config_output is defined
       delegate_to: localhost
+
+    - name: list files
+      ansible.builtin.find:
+        paths: /backup
+        recurse: yes
+      delegate_to: localhost     
