@@ -26,7 +26,7 @@
     - name: Save configuration to backup server
       ansible.builtin.copy:
         src: "{{ config_output.backup_path }}"
-        dest: "/backup/{{ hostvars['sites'] }}/{{ hostvars['device_roles'] }}/{{ inventory_hostname }}/"
+        dest: "/backup/{{ sites }}/{{ device_roles }}/{{ inventory_hostname }}/"
         mode: "644"
       when: config_output is defined
       delegate_to: localhost
