@@ -1,0 +1,31 @@
+plugin: netbox.netbox.nb_inventory
+api_endpoint: http://192.168.100.24:8000
+
+# READ ONLY TOKEN
+#please make sure netbox instance is up and running
+token: b361e1bb6ec9c616e17dc65e61bfbeaf3f368833
+validate_certs: False
+
+compose:
+  ansible_network_os: platform.slug
+
+config_context: True
+
+group_by:
+  - tag
+
+# Filter out not connected items such as racks
+device_query_filters:
+  - has_primary_ip: 'true'
+
+## Only retrieve active machines
+query_filters:
+  - status: active
+
+#will be used for creating groups ex. below syntax will create a group status_active
+
+keyed_groups:
+  - prefix: status
+    key: status.value
+
+

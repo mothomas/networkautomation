@@ -1,0 +1,32 @@
+---
+- name: Retrieve network configurations
+  hosts: "{{ hosts }}"
+  gather_facts: false
+
+  tasks:
+
+    - name: Backup configuration
+      ansible.builtin.include_role:
+        name: "../roles/backup"
+      when: ansible_network_os is defined
+
+    - name: Create time stamp for play
+      ansible.builtin.set_fact:
+        datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
+      run_once: true
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /backup/
+        state: directory
+        mode: "755"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Save configuration to backup server
+      ansible.builtin.copy:
+        src: "{{ config_output.backup_path }}"
+        dest: "/backup/{{ hostvars['sites'] }}/{{ hostvars['device_roles'] }}/{{ inventory_hostname }}/"
+        mode: "644"
+      when: config_output is defined
+      delegate_to: localhost
