@@ -1,0 +1,8 @@
+---
+collections:
+  - name: juniper.device
+    version: 1.0.0
+  - name: cisco.dnac
+    version: 2.0.7
+  - name: netbox.netbox
+    version: 3.17.0
