@@ -1,0 +1,15 @@
+#backup fortinet firewalls
+
+- name: backup global or a_specific_vdom settings
+  fortios_system_config_backup_restore:
+    config: "system config backup"
+    host:  "{{ inventory_hostname }}"
+    username: admin
+    password: admin123
+    vdom: root
+    backup: "yes"
+    https: False
+    ssl_verify: False
+    scope: "global or vdom"
+    filename: "/tmp/{{ inventory_hostname }}.txt" 
+  register: config_output
