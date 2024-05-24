@@ -1,5 +1,4 @@
 #backup fortinet firewalls
-
 - name: backup global or a_specific_vdom settings
   fortios_system_config_backup_restore:
     config: "system config backup"
