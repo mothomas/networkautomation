@@ -21,6 +21,7 @@ device_query_filters:
 ## Only retrieve active machines
 query_filters:
   - status: active
+  - tag: backup
 
 #will be used for creating groups ex. below syntax will create a group status_active
 
