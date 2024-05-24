@@ -12,7 +12,7 @@ compose:
 config_context: True
 
 group_by:
-  - tag
+  - tags
 
 # Filter out not connected items such as racks
 device_query_filters:
