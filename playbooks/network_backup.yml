@@ -29,7 +29,7 @@
     - name: Save configuration to backup server
       ansible.builtin.copy:
         src: "{{ config_output.backup_path }}"
-        dest: "/backup/{{ sites | first }}/{{ device_roles | first }}//"
+        dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/"
         mode: "644"
       when: config_output is defined
       delegate_to: localhost
