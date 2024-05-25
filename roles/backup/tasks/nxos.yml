@@ -1,0 +1,14 @@
+
+# This task will setup how ansible should connect to nxos
+- name: define connection  method for ios moduke
+  ansible.builtin.set_fact:
+    ansible_connection: ansible.netcommon.network_cli
+
+# backup nexus
+- name: configurable backup path
+  cisco.nxos.nxos_config:
+    backup: true
+    backup_options:
+      filename: "{{ inventory_hostname }}.txt"
+      dir_path: /tmp
+  register: config_output 
