@@ -15,9 +15,6 @@
         datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
       run_once: true
 
-    - name: debug
-      ansible.builtin.debug: 
-        msg: "writing config of  at {{ sites | first }}  with role {{ device_roles | first}}"
     - name: Create a directory if it does not exist
       ansible.builtin.file:
         path: /backup/
@@ -26,7 +23,7 @@
       delegate_to: localhost
       run_once: true
 
-    - name: Save configuration to backup server
+    - name: Save configuration to backup folder
       ansible.builtin.copy:
         src: "{{ config_output.backup_path }}"
         dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/"
@@ -34,9 +31,8 @@
       when: config_output is defined
       delegate_to: localhost
 
-    - name: list files
-      ansible.builtin.find:
-        paths: /backup
-        recurse: yes
-      delegate_to: localhost
-      run_once: true
+    - name: Backup configuration
+      ansible.builtin.include_role:
+        name: "../roles/upload"
+      run_once: true  
+      
