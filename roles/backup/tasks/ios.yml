@@ -1,3 +1,8 @@
+# This task will setup how ansible should connect to ios
+- name: define connection  method for ios moduke
+  ansible.builtin.set_fact:
+    ansible_connection: ansible.netcommon.network_cli
+    
 # This task will backup the configuration
 - name: Backup cisco ios configuration
   cisco.ios.ios_config:
