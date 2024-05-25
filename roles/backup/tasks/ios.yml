@@ -2,6 +2,8 @@
 - name: define connection  method for ios moduke
   ansible.builtin.set_fact:
     ansible_connection: ansible.netcommon.network_cli
+    ansible_user: mobin
+    ansible_password: cisco
     
 # This task will backup the configuration
 - name: Backup cisco ios configuration
