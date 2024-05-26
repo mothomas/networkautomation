@@ -19,6 +19,7 @@
       git push origin main    
     args:
       chdir: /backup
-    
+    delegate_to: localhost
+        
       
         
