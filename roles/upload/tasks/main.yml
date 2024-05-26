@@ -1,5 +1,5 @@
   - name: "Add output directory to git"
-    ansible.builtin.command: |
+    ansible.builtin.shell: |
       git init
       git remote add main https://github.com/mothomas/backup.git
       git fetch origin main
