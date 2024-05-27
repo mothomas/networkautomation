@@ -1,38 +1,34 @@
-
-  - name: " setup fortinet vars"
-    ansible.builtin.set_fact:
-      ansible_httpapi_use_ssl: yes
-      ansible_httpapi_validate_certs: no
-      ansible_httpapi_port: 443
-      ansible_user: admin
-      ansible_password: admin123
-      ansible_network_os: fortios
-      ansible_connection: httpapi
-
+---
+- name: " setup fortinet vars"
+  ansible.builtin.set_fact:
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no
+    ansible_httpapi_port: 443
+    ansible_user: admin
+    ansible_password: admin123
+    ansible_network_os: fortios
+    ansible_connection: httpapi
+    
+- name: Backup a virtual domain.
+  fortinet.fortios.fortios_monitor_fact:
+    selector: system_config_backup
+    vdom: root
+    params:
+      scope: vdom
+  register: backupinfo
   
-  - name: Backup a virtual domain.
-    fortinet.fortios.fortios_monitor_fact:
-      selector: 'system_config_backup'
-      vdom: 'root'
-      params:
-         scope: 'vdom'   
-    register: backupinfo
-
-  - name: Create a directory if it does not exist
-    ansible.builtin.file:
-      path: "/backup/{{ sites | first }}/{{ device_roles | first }}"
-      state: directory
-      mode: '0755'
-    when: backupinfo is defined
-    delegate_to: localhost
-
- -  name: Save the backup information.
-    ansible.builtin.copy:
-      content: '{{ backupinfo.meta.raw }}'
-      dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/{{ inventory_hostname }}.txt"
-      mode: "644"
-    when: backupinfo is defined
-    delegate_to: localhost
-      
-
-
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "/backup/{{ sites | first }}/{{ device_roles | first }}"
+    state: directory
+    mode: "0755"
+  when: backupinfo is defined
+  delegate_to: localhost
+  
+- name: Save the backup information.
+  ansible.builtin.copy:
+    content: "{{ backupinfo.meta.raw }}"
+    dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/{{ inventory_hostname }}.txt"
+    mode: "644"
+  when: backupinfo is defined
+  delegate_to: localhost
