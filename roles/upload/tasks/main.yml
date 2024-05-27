@@ -32,7 +32,7 @@
     - name: Add and commit changes
       ansible.builtin.shell: |
         git add .
-        git commit -m "Backup on {{ ansible_date_time.date }}"
+        git commit -m "Backup on 05-05-24"
       args:
         chdir: /backup
       ignore_errors: yes
@@ -47,8 +47,8 @@
 
     - name: Create and push date-based branch
       ansible.builtin.shell: |
-        git checkout -b {{ ansible_date_time.date }}
-        git push origin {{ ansible_date_time.date }}
+        git checkout -b 05-05-24
+        git push origin 05-05-24
       args:
         chdir: /backup
       ignore_errors: yes
