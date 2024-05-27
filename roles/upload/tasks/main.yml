@@ -31,7 +31,11 @@
       args:
         chdir: /backup
       delegate_to: localhost
-   
+
+
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+        minutes: 5   
 
 
     - name: Add and commit changes
