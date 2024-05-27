@@ -2,24 +2,22 @@
 #    ansible.builtin.pause:
 #      minutes: 5  
 
-
-  - name: "Add output directory to git"
-    ansible.builtin.shell: | 
+- name: "Add output directory to git"
+  ansible.builtin.shell: | 
       git config --global user.email "mobthomas@gmail.com"
       git config --global user.name "mothomas"
       git init
-      git remote add origin https://mothomas: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@github.com/mothomas/ntwrkbackup.git
-      git fetch origin main
-      git checkout -b 29-04-24
-      git add .
-      git commit -m " backup on 29-04-24 "
-      git push origin 29-04-24
+      git remote add origin https://mothomas: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@github.com/mothomas/ntwrk-backup.git
+      git fetch origin
       git checkout main
-      git merge 29-04-24
-      git push origin main --force   
-    args:
-      chdir: /backup
-    delegate_to: localhost
+      git add .
+      git commit -m "COMMIT_MESSAGE1 04-05-24"
+      git push origin main
+      git checkout -b 04-05-24
+      git push origin 04-05-24
+  args:
+     chdir: /backup
+  delegate_to: localhost
         
       
         
