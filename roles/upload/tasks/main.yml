@@ -18,7 +18,7 @@
       ansible.builtin.shell: |
         if [ ! -d .git ]; then
           git init
-          "git remote add origin https://{{ user | urlencode }}:{{ token | urlencode }}"@github.com/mothomas/ntwrk-backup.git"
+          git remote add origin "https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
         fi
       args:
         chdir: /backup
@@ -36,7 +36,7 @@
 
     - name: Add and commit changes
       ansible.builtin.shell: |
-        "git remote add origin https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
+        git remote add origin "https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
         git add .
         git commit -m "Backup on 05-05-24"
         git push origin main
