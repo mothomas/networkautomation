@@ -22,6 +22,6 @@
   - name: Save the backup information.
     ansible.builtin.copy:
      content: '{{ backupinfo.meta.raw }}'
-     dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/{{ inventory_host }}.txt"
+     dest: "/backup/{{ sites | first }}/{{ device_roles | first }}/{{ inventory_hostname }}.txt"
     delegate_to: localhost
     when: backupinfo is defined 
