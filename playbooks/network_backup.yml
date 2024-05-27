@@ -44,5 +44,5 @@
       ansible.builtin.include_role:
         name: "../roles/upload"
       run_once: true
-      delegate_to: localhost      
+    
       
