@@ -13,6 +13,7 @@ config_context: True
 
 group_by:
   - tags
+  - sites
 
 # Filter out not connected items such as racks
 device_query_filters:
@@ -22,6 +23,7 @@ device_query_filters:
 query_filters:
   - status: active
   - tag: backup
+  - site: lab
 
 #will be used for creating groups ex. below syntax will create a group status_active
 
