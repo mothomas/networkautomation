@@ -1,6 +1,6 @@
     - set_fact:
          user: "mothomas"
-         token: "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"
+         token: "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"
          
     - name: Set Git user email
       ansible.builtin.shell: git config --global user.email "mobthomas@gmail.com"
@@ -31,11 +31,6 @@
       args:
         chdir: /backup
       delegate_to: localhost
-
-
-    - name: Pause for 5 minutes to build app cache
-      ansible.builtin.pause:
-        minutes: 5   
 
 
     - name: Add and commit changes
