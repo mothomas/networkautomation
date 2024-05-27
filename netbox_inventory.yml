@@ -23,7 +23,6 @@ device_query_filters:
 query_filters:
   - status: active
   - tag: backup
-  - site: lab
 
 #will be used for creating groups ex. below syntax will create a group status_active
 
