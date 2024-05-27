@@ -8,8 +8,8 @@
       branch_name="29-03-24"
       git config --global user.email "mobthomas@gmail.com"
       git config --global user.name "mothomas"
-        git init
-      git remote add origin https://mothomas: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@github.com/mothomas/backup.git
+      git init
+      git remote add origin https://mothomas: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@github.com/mothomas/ntwrkbackup.git
       git fetch origin main
       git checkout -b "$branch_name" 
       git add .
