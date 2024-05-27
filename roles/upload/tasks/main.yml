@@ -1,4 +1,7 @@
-
+    - set_fact:
+         user: "mothomas"
+         token: "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"
+         
     - name: Set Git user email
       ansible.builtin.shell: git config --global user.email "mobthomas@gmail.com"
       args:
@@ -15,7 +18,7 @@
       ansible.builtin.shell: |
         if [ ! -d .git ]; then
           git init
-          git remote add origin https://mothomas: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@github.com/mothomas/ntwrk-backup.git
+          "git remote add origin https://{{ user | urlencode }}:{{ token | urlencode }}"@github.com/mothomas/ntwrk-backup.git"
         fi
       args:
         chdir: /backup
@@ -27,11 +30,13 @@
         git checkout -B main origin/main || git checkout -b main
       args:
         chdir: /backup
-      delegate_to: localhost        
+      delegate_to: localhost
+   
+
 
     - name: Add and commit changes
       ansible.builtin.shell: |
-        git remote add origin https://mothomas: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@github.com/mothomas/ntwrk-backup.git
+        "git remote add origin https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
         git add .
         git commit -m "Backup on 05-05-24"
         git push origin main
