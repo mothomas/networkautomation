@@ -31,6 +31,7 @@
 
     - name: Add and commit changes
       ansible.builtin.shell: |
+        git remote add origin https://mothomas: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@github.com/mothomas/ntwrk-backup.git
         git add .
         git commit -m "Backup on 05-05-24"
       args:
