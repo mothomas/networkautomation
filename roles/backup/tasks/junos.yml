@@ -1,8 +1,19 @@
-- name: Ensure netconf is running
+#- name: Ensure netconf is running
+#  vars:
+#    ansible_connection: network_cli
+#  junipernetworks.junos.junos_netconf:
+#    listens_on: 22
+    
+- name: Enable NETCONF on junos devices using junos_config
+  junos_config:
+    lines:
+      - delete system services netconf ssh port 830
+      - delete system services netconf ssh port 22
+      - set system services netconf ssh
+  when: ansible_network_os == 'junos'
   vars:
     ansible_connection: network_cli
-  junipernetworks.junos.junos_netconf:
-    listens_on: 22
+    
 - name: Backup junos configuration
   vars:
     ansible_connection: netconf
