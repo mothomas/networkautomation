@@ -28,6 +28,12 @@
       when: config_output is defined
       delegate_to: localhost
 
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+        minutes: 10
+
+      
+
  #   - name: Backup configuration
  #     ansible.builtin.include_role:
  #       name: "../roles/upload"
