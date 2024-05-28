@@ -5,4 +5,21 @@
     state: directory
     mode: "755"
   delegate_to: localhost
-  run_once: true
+  
+- name: Baremetal | Construct Git URL with no_log for credential obfuscation
+  ansible.builtin.set_fact:
+    git_url: "https://{{ gitlab_user }}:{{ gitlab_pat }}@{{ gitlab_url }}/{{ gitlab_repo_git }}"
+  delegate_to: localhost  
+  no_log: true
+
+- name: Baremetal | Git set user and token
+  ansible.builtin.shell: |
+    git config user.email "{{ push_git_user_email }}"
+    git config user.name "{{ push_git_user_name }}"
+    git config --global credential.helper store
+    git config --global credential.helper 'cache --timeout=3000'
+    git config --global github.user {{ gitlab_user }}
+    git config --global github.token {{ gitlab_pat }}
+  args:
+    chdir: /backup
+  delegate_to: localhost  
