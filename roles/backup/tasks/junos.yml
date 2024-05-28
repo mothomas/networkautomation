@@ -1,6 +1,7 @@
 - name: Ensure netconf is running
   vars:
     ansible_connection: network_cli
+      listens_on: 22
   junipernetworks.junos.junos_netconf:
 
 - name: Backup junos configuration
