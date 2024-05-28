@@ -1,7 +1,8 @@
 ---
 - name: Retrieve network configurations
   hosts: "{{ hosts }}"
-  gather_facts: false
+  serial: 3
+  gather_facts: False
 
   tasks:
     - name: setting up backup folder and init git 
@@ -27,9 +28,9 @@
       when: config_output is defined
       delegate_to: localhost
 
-    - name: Backup configuration
-      ansible.builtin.include_role:
-        name: "../roles/upload"
-      run_once: true
+ #   - name: Backup configuration
+ #     ansible.builtin.include_role:
+ #       name: "../roles/upload"
+ #     run_once: true
     
       
