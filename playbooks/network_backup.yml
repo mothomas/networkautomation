@@ -4,7 +4,11 @@
   gather_facts: false
 
   tasks:
-
+    - name: setting up backup folder and init git 
+      ansible.builtin.include_role:
+        name: "../roles/setup"
+      run_once: true  
+    
     - name: Backup configuration
       ansible.builtin.include_role:
         name: "../roles/backup"
