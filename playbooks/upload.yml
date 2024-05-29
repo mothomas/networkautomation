@@ -5,15 +5,15 @@
 
   tasks:
 
-    - name: Setup | Create a temp dir for git
-      ansible.builtin.tempfile:
-        state: directory
-        suffix: build
+   - name: Setup | Create a temp dir for git
+     ansible.builtin.tempfile:
+       state: directory
+       suffix: build
      register: git_temp_dir
 
    - name: Setup | setup git backup repo url
      ansible.builtin.set_fact:
-        git_backuprepo_url: "https://{{ git_user_name }}:{{ git_token }}@{{ git_url }}/{{ git_repo_name }}.git"
+       git_backuprepo_url: "https://{{ git_user_name }}:{{ git_token }}@{{ git_url }}/{{ git_repo_name }}.git"
  
 
    - name: Baremetal | Git set user and token
