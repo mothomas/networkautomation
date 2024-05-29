@@ -2,7 +2,7 @@
 - name: Create time stamp for play
   ansible.builtin.set_fact:
      datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
-  delegate_to: localhost
+#  delegate_to: localhost
 
 - name: Synchronize Backup folder with backup repo
   ansible.posix.synchronize:
@@ -13,7 +13,7 @@
     compress: false
     rsync_opts:
       - "--exclude=.git"
-  delegate_to: localhost
+#  delegate_to: localhost
 
 - name: Upload | Git add the new cluster and inventory artefact
   ansible.builtin.shell: |
@@ -21,14 +21,14 @@
     git add .
   args:
     chdir: "{{ git_temp_dir.path }}/git"
-  delegate_to: localhost
+#  delegate_to: localhost
 
 - name: Upload | Git commit the new cluster
   ansible.builtin.shell: |
     git commit -m "Backup on: {{ datetime }} AAP JOB: {{ tower_job_id }}"
   args:
     chdir: "{{ git_temp_dir.path }}/git"
-  delegate_to: localhost
+ # delegate_to: localhost
 
 - name: Upload | git push the backup to main
   ansible.builtin.shell: git push --force
