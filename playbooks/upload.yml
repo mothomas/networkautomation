@@ -1,9 +1,4 @@
 ---
-- name: upload network configurations to git
-  hosts: localhost
-
-  tasks:
-
    - name: Setup | Create a temp dir for git
      ansible.builtin.tempfile:
        state: directory
