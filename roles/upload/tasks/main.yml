@@ -1,60 +1,36 @@
-    - set_fact:
-         user: "mothomas"
-         token: "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"
-         
-    - name: Set Git user email
-      ansible.builtin.shell: git config --global user.email "mobthomas@gmail.com"
-      args:
-        chdir: /backup
-      delegate_to: localhost
+---
+- name: Create time stamp for play
+  ansible.builtin.set_fact:
+     datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
+  delegate_to: localhost
 
-    - name: Set Git user name
-      ansible.builtin.shell: git config --global user.name "mothomas"
-      args:
-        chdir: /backup
-      delegate_to: localhost        
+- name: Synchronize Backup folder with backup repo
+  ansible.posix.synchronize:
+    src: /backup
+    dest: "{{ git_temp_dir.path }}/git"
+    delete: true
+    rsync_opts:
+      - "--exclude=.git"
+  delegate_to: localhost
 
-    - name: Initialize Git repository if not already initialized
-      ansible.builtin.shell: |
-        if [ ! -d .git ]; then
-          git init
-          git remote add origin "https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
-        fi
-      args:
-        chdir: /backup
-      delegate_to: localhost        
+- name: Upload | Git add the new cluster and inventory artefact
+  ansible.builtin.shell: |
+    pwd && ls -lRh
+    git add .
+  args:
+    chdir: "{{ git_temp_dir.path }}/git"
+  delegate_to: localhost
 
-    - name: Fetch and checkout main branch
-      ansible.builtin.shell: |
-        git fetch origin
-        git checkout -B main origin/main || git checkout -b main
-      args:
-        chdir: /backup
-      delegate_to: localhost
+- name: Upload | Git commit the new cluster
+  ansible.builtin.shell: |
+    git commit -m "Backup on: {{ datetime }} AAP JOB: {{ tower_job_id }}"
+  args:
+    chdir: "{{ git_temp_dir.path }}/git"
+  delegate_to: localhost
 
+- name: Upload | git push the backup to main
+  ansible.builtin.shell: git push --force
+  args:
+    chdir: "{{ git_temp_dir.path }}/git"    
+  delegate_to: localhost
 
-    - name: Add and commit changes
-      ansible.builtin.shell: |
-        git remote add origin "https://{{ user | urlencode }}:{{ token | urlencode }}@github.com/mothomas/ntwrk-backup.git"
-        git add .
-        git commit -m "Backup on 05-05-24"
-        git push origin main
-      args:
-        chdir: /backup
-      ignore_errors: yes
-      delegate_to: localhost      
-
-   
-
-    - name: Create and push date-based branch
-      ansible.builtin.shell: |
-        git checkout -b 05-05-24
-        git push origin 05-05-24
-      args:
-        chdir: /backup
-      ignore_errors: yes
-      delegate_to: localhost      
-
-        
-      
-        
