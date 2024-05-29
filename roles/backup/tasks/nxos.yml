@@ -11,4 +11,11 @@
     backup_options:
       filename: "{{ inventory_hostname }}.txt"
       dir_path: /tmp
-  register: config_output 
+  register: config_output
+
+- name: Remove non config lines - regexp
+  ansible.builtin.lineinfile:
+    path: "{{ config_output.backup_path }}"
+    line: "!Time"
+    state: absent
+  
