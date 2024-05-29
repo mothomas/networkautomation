@@ -8,7 +8,13 @@
    - name: Setup | setup git backup repo url
      ansible.builtin.set_fact:
        git_backuprepo_url: "https://{{ git_user_name }}:{{ git_token }}@{{ git_url }}/{{ git_repo_name }}.git"
- 
+
+   - name:  Clone down the backup repo
+     ansible.builtin.git:
+        repo: "{{ git_backuprepo_url }}"
+        dest: "{{ git_temp_dir.path }}/git"
+        clone: true
+        version: "main" 
 
    - name: Baremetal | Git set user and token
      ansible.builtin.shell: |
@@ -21,12 +27,7 @@
      args:
         chdir: /backup
 
-   - name:  Clone down the backup repo
-     ansible.builtin.git:
-        repo: "{{ git_backuprepo_url }}"
-        dest: "{{ git_temp_dir.path }}/git"
-        clone: true
-        version: "main"
+
 
    - name: Create time stamp for play
      ansible.builtin.set_fact:
@@ -34,8 +35,7 @@
 
    - name: Synchronize /backup to {{ git_temp_dir.path }}/git
      ansible.builtin.shell: |
-        /usr/bin/rsync --delay-updates -F --delete-after --archive --compress --exclude=.git --out-format='<<CHANGED>>%i %n%L' /backup/ {{ git_temp_dir.path }}/git
-     delegate_to: localhost
+        /usr/bin/rsync --delay-updates -F --delete-after --archive --compress --exclude=.git --out-format='<<CHANGED>>%i %n%L' /backup/ {{ git_temp_dir.path }}/git/
       
  #  - name: Synchronize Backup folder with backup repo
  #    ansible.posix.synchronize:
