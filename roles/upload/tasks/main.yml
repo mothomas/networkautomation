@@ -7,7 +7,7 @@
 - name: Synchronize Backup folder with backup repo
   ansible.posix.synchronize:
     src: /backup
-    dest: "{{ git_temp_dir.path }}/git"
+    dest: "/{{ git_temp_dir.path }}/git"
     delete: true
     recursive: true
     compress: false
