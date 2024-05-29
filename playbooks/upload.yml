@@ -1,0 +1,69 @@
+---
+- name: upload network configurations to git
+  hosts: localhost
+  gather_facts: False
+
+  tasks:
+
+    - name: Setup | Create a temp dir for git
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: build
+     register: git_temp_dir
+
+   - name: Setup | setup git backup repo url
+     ansible.builtin.set_fact:
+        git_backuprepo_url: "https://{{ git_user_name }}:{{ git_token }}@{{ git_url }}/{{ git_repo_name }}.git"
+ 
+
+   - name: Baremetal | Git set user and token
+     ansible.builtin.shell: |
+        git config user.email "{{ git_user_email }}"
+        git config user.name "{{ git_user_name }}"
+        git config --global credential.helper store
+        git config --global credential.helper 'cache --timeout=300'
+        git config --global github.user "{{ git_user_name }}"
+        git config --global github.token "{{ git_token }}"
+     args:
+     chdir: /backup
+
+   - name:  Clone down the backup repo
+     ansible.builtin.git:
+        repo: "{{ git_backuprepo_url }}"
+        dest: "{{ git_temp_dir.path }}/git"
+        clone: true
+        version: "main"
+
+   - name: Create time stamp for play
+     ansible.builtin.set_fact:
+        datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
+
+   - name: Synchronize Backup folder with backup repo
+     ansible.posix.synchronize:
+        src: /backup
+        dest: "/{{ git_temp_dir.path }}/git"
+        delete: true
+        recursive: true
+        compress: false
+        rsync_opts:
+          - "--exclude=.git"
+
+   - name: Upload | Git add the new cluster and inventory artefact
+     ansible.builtin.shell: |
+        pwd && ls -lRh
+        git add .
+     args:
+        chdir: "{{ git_temp_dir.path }}/git"
+
+   - name: Upload | Git commit the new cluster
+     ansible.builtin.shell: |
+        git commit -m "Backup on: {{ datetime }} AAP JOB: {{ tower_job_id }}"
+     args:
+        chdir: "{{ git_temp_dir.path }}/git"
+
+   - name: Upload | git push the backup to main
+     ansible.builtin.shell: git push --force
+     args:
+        chdir: "{{ git_temp_dir.path }}/git"    
+
+

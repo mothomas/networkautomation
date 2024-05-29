@@ -23,17 +23,17 @@
 #      ansible.builtin.pause:
 #        minutes: 10
 
-    - name: setting up backup folder and init git
+#    - name: setting up backup folder and init git
 #      ansible.builtin.include_role:
-      ansible.builtin.import_role:  
-        name: "../roles/setup"
-      run_once: true               
-      delegate_to: localhost
-
+#      ansible.builtin.import_role:  
+#        name: "../roles/setup"
+#      run_once: true               
+#      delegate_to: localhost
+#
     - name: Backup configuration
-      ansible.builtin.import_role:
+      ansible.builtin.import_task:
 #      ansible.builtin.include_role:
-        name: "../roles/upload"
+        file: "upload.yml"
       run_once: true
-      delegate_to: localhost
+#      delegate_to: localhost
       
