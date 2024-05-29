@@ -24,13 +24,16 @@
         minutes: 10
 
     - name: setting up backup folder and init git
-      ansible.builtin.include_role:
+#      ansible.builtin.include_role:
+      ansible.builtin.import_role:  
         name: "../roles/setup"
       run_once: true               
+      delegate_to: localhost
 
     - name: Backup configuration
-      ansible.builtin.include_role:
+      ansible.builtin.import_role:
+#      ansible.builtin.include_role:
         name: "../roles/upload"
       run_once: true
-    
+      delegate_to: localhost
       
