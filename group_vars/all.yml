@@ -1,10 +1,10 @@
 
 
+git_token: "{{ git_pat }}"
 
 git_user_email: "mobthomas@gmail.com"
 
 git_user_name: "mothoma"
-
 
 git_url: "github.com/mothomas/"
 
