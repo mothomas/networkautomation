@@ -35,5 +35,5 @@
 #      ansible.builtin.include_role:
         file: "upload.yml"
       run_once: true
-#      delegate_to: localhost
+      delegate_to: localhost
       
