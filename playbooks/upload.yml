@@ -25,7 +25,7 @@
         git config --global github.user "{{ git_user_name }}"
         git config --global github.token "{{ git_token }}"
      args:
-        chdir: /backup
+        chdir: "{{ git_temp_dir.path }}/git"
 
 
 
