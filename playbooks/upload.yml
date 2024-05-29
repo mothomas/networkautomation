@@ -19,7 +19,7 @@
         git config --global github.user "{{ git_user_name }}"
         git config --global github.token "{{ git_token }}"
      args:
-     chdir: /backup
+        chdir: /backup
 
    - name:  Clone down the backup repo
      ansible.builtin.git:
