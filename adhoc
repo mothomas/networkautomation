@@ -21,3 +21,27 @@
          dir_path: /tmp/
          filename: "{{ inventory_hostname }}.txt"
      register: config_output
+
+
+
+---
+- name: Retrieve network configurations
+  hosts: "{{ hosts }}"
+  serial: 3
+  gather_facts: False
+
+  tasks:
+    - name: Initialize host_ip as an empty list
+      ansible.builtin.set_fact:
+        host_ip: []
+
+    - name: Append ansible_host to host_ip_list for Junos devices
+      ansible.builtin.set_fact:
+        host_ip: "{{ host_ip + [ansible_host] }}"
+      when: ansible_network_os is defined and ansible_network_os == 'junos'
+
+    - name: Display the host_ip_list
+      ansible.builtin.debug:
+        msg: "{{ host_ip }}"
+      run_once: true
+
