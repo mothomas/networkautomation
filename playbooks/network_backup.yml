@@ -31,7 +31,7 @@
 #      delegate_to: localhost
 #
     - name: Backup configuration
-      ansible.builtin.import_task:
+      ansible.builtin.import_tasks:
 #      ansible.builtin.include_role:
         file: "upload.yml"
       run_once: true
