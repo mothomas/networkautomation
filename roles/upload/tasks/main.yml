@@ -9,6 +9,8 @@
     src: /backup
     dest: "{{ git_temp_dir.path }}/git"
     delete: true
+    recursive: true
+    compress: false
     rsync_opts:
       - "--exclude=.git"
   delegate_to: localhost
