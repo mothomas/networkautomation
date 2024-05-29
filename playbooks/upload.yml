@@ -1,7 +1,6 @@
 ---
 - name: upload network configurations to git
   hosts: localhost
-  gather_facts: False
 
   tasks:
 
