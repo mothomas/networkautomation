@@ -1,0 +1,23 @@
+---
+- name: Retrieve network configurations
+  hosts: junos
+  gather_facts: False
+
+  tasks:
+
+   - name: Ensure netconf is running
+     vars:
+       ansible_connection: network_cli
+     junipernetworks.junos.junos_command:
+       commands: show version
+     
+    
+   - name: Backup junos configuration
+     vars:
+       ansible_connection: netconf
+     junipernetworks.junos.junos_config:
+       backup: true
+       backup_options:
+         dir_path: /tmp/
+         filename: "{{ inventory_hostname }}.txt"
+     register: config_output
