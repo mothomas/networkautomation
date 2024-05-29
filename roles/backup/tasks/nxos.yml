@@ -16,7 +16,7 @@
 - name: Remove non config lines - regexp
   ansible.builtin.lineinfile:
     path: "{{ config_output.backup_path }}"
-    line: "!Time"
+    regexp: '^!Time:'
     state: absent
   delegate_to: localhost  
   
