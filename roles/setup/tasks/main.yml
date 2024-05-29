@@ -10,7 +10,7 @@
 - name: Setup | setup git backup repo url
   ansible.builtin.set_fact:
     git_backuprepo_url: "https://{{ git_user_name }}:{{ git_token }}@{{ git_url }}/{{ git_repo_name }}.git"
-  no_log: true
+ 
   delegate_to: localhost  
 
 - name: Baremetal | Git set user and token
