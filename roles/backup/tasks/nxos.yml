@@ -18,4 +18,5 @@
     path: "{{ config_output.backup_path }}"
     line: "!Time"
     state: absent
+  delegate_to: localhost  
   
