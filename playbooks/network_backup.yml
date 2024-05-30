@@ -17,9 +17,9 @@
       ansible.builtin.blockinfile:
         append_newline: true
         prepend_newline: true
-        path: "{{ failed_host_list.path }}
+        path: "{{ failed_host_list.path }}"
         block: |
-          {{ inventory_hostname }} 'reason': 'device platform not available in NetBox or not supported'
+          "{{ inventory_hostname }} 'reason': 'device platform not available in NetBox or not supported'"
       when:
           -  ansible_network_os is not defined or ansible_network_os not in supported_platforms
       delegate_to: localhost    
