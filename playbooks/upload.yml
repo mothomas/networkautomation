@@ -64,6 +64,22 @@
    - name: Upload | git push the backup to main
      ansible.builtin.shell: git push --force
      args:
-        chdir: "{{ git_temp_dir.path }}/git"    
+        chdir: "{{ git_temp_dir.path }}/git"  
+
+   - name: Checkout to a new branch
+     ansible.builtin.command:
+       cmd: "git checkout -b  06-06-24"
+       chdir: "{{ git_temp_dir.path }}/git" 
+
+   - name: Add files to the staging area (if needed)
+     ansible.builtin.command:
+       cmd: "git add ."
+       chdir: "{{ git_temp_dir.path }}/git" 
+
+   - name: Commit changes to the new branch
+     ansible.builtin.command:
+       cmd: "git commit -m 'Your commit message'"
+       chdir: "{{ git_temp_dir.path }}/git" 
+  
 
 
