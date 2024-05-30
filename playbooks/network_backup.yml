@@ -44,7 +44,7 @@
       delegate_to: localhost
       
     - ansible.builtin.debug:
-         msg: " below hosts failed  {{ ansible_facts.failed_hosts }} "
+         msg: " below hosts failed  {{ failed_hosts }} "
       run_once: true
       delegate_to: localhost
             
