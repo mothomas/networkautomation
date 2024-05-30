@@ -41,10 +41,6 @@
       when: config_output is defined
       delegate_to: localhost
 
-#    - name: Pause for 5 minutes to build app cache
-#      ansible.builtin.pause:
-#        minutes: 10
-
 #    - name: setting up backup folder and init git
 #      ansible.builtin.include_role:
 #      ansible.builtin.import_role:  
@@ -71,6 +67,10 @@
       run_once: true
       delegate_to: localhost
       
+
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+        minutes: 10
       
       
       
