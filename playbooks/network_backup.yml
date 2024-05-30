@@ -9,6 +9,7 @@
       ansible.builtin.set_fact:
         failed_hosts: "{{ failed_hosts  + [{'hostname': inventory_hostname, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
       when: ansible_network_os is not defined or ansible_network_os not in supported_platforms
+      delegate_facts: true
       delegate_to: localhost
 
     - name: Backup configuration
