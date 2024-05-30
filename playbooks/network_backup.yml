@@ -18,9 +18,7 @@
         echo "{{ inventory_hostname }} reason: device platform not available in NetBox or not supported" >> "{{ failed_host_list.path }}"
       when: hostvars[inventory_hostname].ansible_network_os is not defined or hostvars[inventory_hostname].ansible_network_os not in supported_platforms
       delegate_to: localhost
-
     
-      
 
   tasks:
   
@@ -66,10 +64,7 @@
       delegate_to: localhost
       
 
-    - name: Pause for 5 minutes to build app cache
-      ansible.builtin.pause:
-        minutes: 10
-      
+ 
       
       
       
