@@ -60,12 +60,18 @@
         file: "upload.yml"
       run_once: true
       delegate_to: localhost
+    
+    - name: set content
+      ansible.builtin.set_fact:
+        file_content: "{{ lookup('file', failed_host_list.path) }}"
+      run_once: true
+      delegate_to: localhost        
 
     - name: debug
       ansible.builtin.debug:
-          msg: "{{ file_content }}"
-      var:
-        file_content: "{{ lookup('file', failed_host_list.path) }}"
+        msg: "{{ file_content }}"
+      run_once: true
+      delegate_to: localhost
       
       
       
