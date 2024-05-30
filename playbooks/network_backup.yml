@@ -17,10 +17,11 @@
       ansible.builtin.blockinfile:
         path: "{{ failed_host_list.path }}"
         block: |
-          "{{ inventory_hostname }} 'reason': 'device platform not available in NetBox or not supported'"
-      when:
-          -  ansible_network_os is not defined or ansible_network_os not in supported_platforms
-      delegate_to: localhost    
+          {% for h in groups[hosts] if hostvars[h].ansible_network_os is not defined or hostvars[h].ansible_network_os not in supported_platforms %}
+          {{ inventory_hostname }} reason: device platform not available in NetBox or not supported
+          {% endfor %}
+      delegate_to: localhost 
+      run_once: true
     
       
 
