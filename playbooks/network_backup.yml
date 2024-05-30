@@ -8,7 +8,10 @@
     - name: Backup configuration
       ansible.builtin.include_role:
         name: "../roles/backup"
-      when: ansible_network_os is defined
+      when: 
+        - ansible_network_os is defined
+        - sites is defined
+        - device_roles is defined
 
     - name: Save configuration to backup folder
       ansible.builtin.copy:
