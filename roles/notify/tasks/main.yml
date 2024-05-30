@@ -1,0 +1,15 @@
+---
+- name: Check if a file is empty
+  ansible.builtin.stat:
+    path: "{{ failed_host_list.path }}"
+  register: file_info
+  delegate_to: localhost
+
+- name: Perform action based on file emptiness
+  ansible.builtin.debug:
+    msg: "The file is not empty"
+  when: file_info.stat.size > 0
+  delegate_to: localhost
+  
+  
+      

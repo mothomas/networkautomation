@@ -63,6 +63,13 @@
         msg: "{{ file_content }}"
       run_once: true
       delegate_to: localhost
+
+    - name: Backup configuration
+      ansible.builtin.include_role:
+        name: "../roles/notify"  
+      run_once: true    
+
+  
       
 
  
