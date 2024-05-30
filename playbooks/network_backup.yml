@@ -9,6 +9,7 @@
          failed_hosts: "{{ failed_hosts | default([]) + [{'hostname': ansible_host, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
       when:
           -  ansible_network_os is not defined or ansible_network_os not in supported_platforms
+      delegate_to: localhost    
     
       
 
