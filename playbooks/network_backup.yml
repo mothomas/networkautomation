@@ -5,16 +5,6 @@
 
   tasks:
   
-    block:
-        - name: Check for necessary data platform, site, device_role in netbox
-          ansible.builtin.set_fact:
-           hosts_failed: "{{ hosts_failed | combine({'hostname': inventory_hostname, 'reason': 'device platform info not available in NetBox or not supported'}) }}"
-          delegate_facts: true
-          delegate_to: localhost
-         
-        - ansible.builtin.debug:
-            msg: "{{ hosts_failed }}" 
-    when: ansible_network_os is not defined or ansible_network_os not in supported_platforms     
 
     - name: Backup configuration
       ansible.builtin.include_role:
@@ -47,12 +37,7 @@
         file: "upload.yml"
       run_once: true
       delegate_to: localhost
-      
-    - ansible.builtin.debug:
-         msg: " below hosts failed   {{ hosts_failed }} "
-      run_once: true
-      delegate_to: localhost
-            
+
       
       
       
