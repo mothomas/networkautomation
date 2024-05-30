@@ -13,14 +13,16 @@
       run_once: true
       delegate_to: localhost
 
-    - name: find Devices that are active but will be excluded from the play.
+    - name: Find devices that are active but will be excluded from the play
       ansible.builtin.blockinfile:
         path: "{{ failed_host_list.path }}"
         block: |
-          {% for h in groups[hosts] if hostvars[h].ansible_network_os is not defined or hostvars[h].ansible_network_os not in supported_platforms %}
-          {{ inventory_hostname }} reason: device platform not available in NetBox or not supported
+          {% for h in groups['all'] if hostvars[h].ansible_network_os is not defined or hostvars[h].ansible_network_os not in supported_platforms %}
+          {{ h }} reason: device platform not available in NetBox or not supported
           {% endfor %}
-      delegate_to: localhost 
+      delegate_to: localhost
+      run_once: true
+
     
       
 
