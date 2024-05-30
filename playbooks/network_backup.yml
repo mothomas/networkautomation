@@ -7,19 +7,15 @@
   
     - name: populate host list without necessary data platform, site, device_role missing in netbox
       ansible.builtin.set_fact:
-        failed_hosts: "{{ failed_hosts | default([]) + [{'hostname': {{ inventory_hostname }}, 'reason': 'Network OS, sites, or device roles not available in NetBox'}] }}"
+        failed_hosts: "{{ failed_hosts | default([]) + [{'hostname': {{ inventory_hostname }}, 'reason': 'device platform not available in NetBox'}] }}"
       when: 
         - ansible_network_os is not defined
-        - sites is not defined
-        - device_roles is not defined
 
     - name: Backup configuration
       ansible.builtin.include_role:
         name: "../roles/backup"
       when: 
         - ansible_network_os is defined
-        - sites is defined
-        - device_roles is defined
 
     - name: Save configuration to backup folder
       ansible.builtin.copy:
@@ -48,7 +44,7 @@
       delegate_to: localhost
       
     - ansible.builtin.debug:
-         msgg: " below hosts failed {{ failed_host }}
+         msg: " below hosts failed {{ failed_host }}
       
       
       
