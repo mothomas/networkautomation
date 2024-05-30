@@ -70,7 +70,7 @@
      ansible.builtin.command:
        cmd: "git commit -m 'Your commit message'"
        chdir: "{{ git_temp_dir.path }}/git" 
-     
+     ignore_errors: yes      
 
    - name: Upload | git push the backup to main
      ansible.builtin.shell: git push  origin 06-06-24 --force
