@@ -3,6 +3,15 @@
   hosts: "{{ hosts }}"
   gather_facts: False
 
+  pre_tasks:
+    - name: find Devices that are active but will be excluded from the play.
+      ansible.builtin.set_fact: 
+         failed_hosts: "{{ failed_hosts | default([]) + [{'hostname': ansible_host, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
+      when:
+          -  ansible_network_os is not defined or ansible_network_os not in supported_platforms
+    
+      
+
   tasks:
   
 
@@ -38,6 +47,9 @@
       run_once: true
       delegate_to: localhost
 
+    - name: debug
+      ansible.builtin.debug:
+          msg: "{{ failed_hosts }}"
       
       
       
