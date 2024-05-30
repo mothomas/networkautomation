@@ -14,9 +14,10 @@
       dir_path: /tmp/
       filename: "{{ inventory_hostname }}.txt"
   register: config_output
+  ignore_errors: yes 
 
-- name: Check if device will be excluded and log the result
+- name: Log failed backup attempts
   ansible.builtin.shell: |
-      echo "{{ inventory_hostname }} reason: failed to fetch backup please check the backup job" >> "{{ failed_host_list.path }}"
-  when: config_output is not defined
+      echo "{{ inventory_hostname }} reason: failed to fetch backup, please check the backup job for exact reason" >> "{{ failed_host_list.path }}"
+  when: config_output is failed
   delegate_to: localhost
