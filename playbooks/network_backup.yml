@@ -21,7 +21,6 @@
           {{ inventory_hostname }} reason: device platform not available in NetBox or not supported
           {% endfor %}
       delegate_to: localhost 
-      run_once: true
     
       
 
