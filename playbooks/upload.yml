@@ -37,16 +37,6 @@
      ansible.builtin.shell: |
         /usr/bin/rsync --delay-updates -F --delete-after --archive --compress --exclude=.git --out-format='<<CHANGED>>%i %n%L' /backup/ {{ git_temp_dir.path }}/git/
       
- #  - name: Synchronize Backup folder with backup repo
- #    ansible.posix.synchronize:
- #       src: /backup
- #       dest: /project       
- #       dest: "rsync://localhost{{ git_temp_dir.path }}/git"
- ##       delete: true
-  #      recursive: true
-  #      compress: false
- #       rsync_opts:
- #         - "--exclude=.git"
 
    - name: Upload | Git add the new cluster and inventory artefact
      ansible.builtin.shell: |
