@@ -5,13 +5,19 @@
 
   tasks:
   
-    - name: populate host list without necessary data platform, site, device_role missing in netbox
+    - name: Initialize failed_hosts list
       ansible.builtin.set_fact:
-        failed_hosts: "{{ inventory_hostname }}"
+        failed_hosts: []
+      run_once: true
+      delegate_to: localhost
+
+    - name: Check for necessary data platform, site, device_role in netbox
+      ansible.builtin.set_fact:
+        failed_hosts: "{{ failed_hosts + [{'hostname': inventory_hostname, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
       when: ansible_network_os is not defined or ansible_network_os not in supported_platforms
       delegate_facts: true
       delegate_to: localhost
-      
+      run_once: false  # Ensure this runs for every host
 
     - name: Backup configuration
       ansible.builtin.include_role:
