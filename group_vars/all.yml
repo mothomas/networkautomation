@@ -1,4 +1,9 @@
 
+# List of platform devices supported by this backup script 
+# Please make sure your netbox has an entry for device platform field
+# and it matches below list, if its different you have to update the script 
+# to include that device
+supported_platforms: [junos, ios, nxos, fortios]
 
 git_token: "{{ git_pat }}"
 
