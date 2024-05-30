@@ -7,13 +7,13 @@
   
     - name: Initialize failed_hosts list
       ansible.builtin.set_fact:
-        failed_hosts: []
+        hosts_failed: []
       run_once: true
       delegate_to: localhost
 
     - name: Check for necessary data platform, site, device_role in netbox
       ansible.builtin.set_fact:
-        failed_hosts: "{{ failed_hosts + [{'hostname': inventory_hostname, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
+        hosts_failed: "{{ hosts_failed + [{'hostname': inventory_hostname, 'reason': 'device platform info not available in NetBox or not supported'}] }}"
       when: ansible_network_os is not defined or ansible_network_os not in supported_platforms
       delegate_facts: true
       delegate_to: localhost
@@ -52,7 +52,7 @@
       delegate_to: localhost
       
     - ansible.builtin.debug:
-         msg: " below hosts failed   {{ failed_hosts }} "
+         msg: " below hosts failed   {{ hosts_failed }} "
       run_once: true
       delegate_to: localhost
             
