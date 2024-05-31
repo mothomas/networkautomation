@@ -36,7 +36,12 @@
    - name: Synchronize /backup to {{ git_temp_dir.path }}/git
      ansible.builtin.shell: |
         /usr/bin/rsync --delay-updates -F --delete-after --archive --compress --exclude=.git --out-format='<<CHANGED>>%i %n%L' /backup/ {{ git_temp_dir.path }}/git/
-      
+      when: on_demand is not defined
+
+   - name: Synchronize /backup to {{ git_temp_dir.path }}/git
+     ansible.builtin.shell: |
+        /usr/bin/rsync --delay-updates -F  --archive --compress --exclude=.git --out-format='<<CHANGED>>%i %n%L' /backup/ {{ git_temp_dir.path }}/git/
+      when: on_demand is defined      
 
    - name: Upload | Git add the new cluster and inventory artefact
      ansible.builtin.shell: |
@@ -60,15 +65,19 @@
      ansible.builtin.command:
        cmd: "git checkout -b  {{ datetime }}"
        chdir: "{{ git_temp_dir.path }}/git" 
+     when: on_demand is not defined
 
    - name: Add files to the staging area (if needed)
      ansible.builtin.command:
        cmd: "git add ."
        chdir: "{{ git_temp_dir.path }}/git" 
+     when: on_demand is not defined
+   
 
    - name: Upload | git push the backup to main
      ansible.builtin.shell: git push  origin {{ datetime }} --force
      args:
-        chdir: "{{ git_temp_dir.path }}/git"  
+        chdir: "{{ git_temp_dir.path }}/git"
+     when: on_demand is not defined   
 
 
