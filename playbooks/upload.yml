@@ -58,7 +58,7 @@
 
    - name: Checkout to a new branch
      ansible.builtin.command:
-       cmd: "git checkout -b  07-06-24"
+       cmd: "git checkout -b  {{ datetime }}"
        chdir: "{{ git_temp_dir.path }}/git" 
 
    - name: Add files to the staging area (if needed)
@@ -67,7 +67,7 @@
        chdir: "{{ git_temp_dir.path }}/git" 
 
    - name: Upload | git push the backup to main
-     ansible.builtin.shell: git push  origin 07-06-24 --force
+     ansible.builtin.shell: git push  origin {{ datetime ]] --force
      args:
         chdir: "{{ git_temp_dir.path }}/git"  
 
