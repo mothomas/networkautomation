@@ -61,7 +61,9 @@
     - ansible.builtin.set_stats:
         data:
           one_stat: 11
-          failed_hosts: "{{ file_content }}"      
+          failed_hosts: "{{ file_content }}"  
+      run_once: true
+      delegate_to: localhost             
 
     - name: debug
       ansible.builtin.debug:
