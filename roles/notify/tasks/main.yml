@@ -10,6 +10,10 @@
     msg: "The file is not empty"
   when: file_info.stat.size > 0
   delegate_to: localhost
+
+- ansible.builtin.set_stats:
+     failed_host: "{{ file_info }}"
+     
   
   
       
