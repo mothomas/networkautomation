@@ -67,7 +67,7 @@
        chdir: "{{ git_temp_dir.path }}/git" 
 
    - name: Upload | git push the backup to main
-     ansible.builtin.shell: git push  origin {{ datetime ]] --force
+     ansible.builtin.shell: git push  origin {{ datetime }} --force
      args:
         chdir: "{{ git_temp_dir.path }}/git"  
 
