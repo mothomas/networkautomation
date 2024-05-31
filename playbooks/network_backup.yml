@@ -56,7 +56,12 @@
       ansible.builtin.set_fact:
         file_content: "{{ lookup('file', failed_host_list.path) }}"
       run_once: true
-      delegate_to: localhost        
+      delegate_to: localhost    
+
+    - ansible.builtin.set_stats:
+        data:
+          one_stat: 11
+          file_content: "{{ file_info }}"      
 
     - name: debug
       ansible.builtin.debug:
