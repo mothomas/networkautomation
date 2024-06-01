@@ -11,10 +11,9 @@
          filename: "{{ inventory_hostname }}.txt"
      register: config_output
 
-   - name: collect failed hosts
-     ansible.builtin.set_fact:
-        failed_hosts: "{{ failed_hosts + [inventory_hostname] }}"     
-     when: config_output.failed
+   - ansible.builtin.debug:
+        msg: "{{   config_output }}"
+   
      
    rescue:
   
