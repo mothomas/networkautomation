@@ -3,7 +3,7 @@
   hosts: all
   sources:
     - ansible.eda.webhook:
-        host: localhost
+        host: 0.0.0.0
         port: 5050
   rules:
     - name: Say Hello
