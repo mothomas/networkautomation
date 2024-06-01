@@ -19,7 +19,7 @@
   rescue:
 
    - name: collect failed hosts
-     ansible.builtin.set_facts:
+     ansible.builtin.set_fact:
         failed_hosts: "{{ failed_hosts + [ lookup('vars', ansible_host) ] }}"
 
   
