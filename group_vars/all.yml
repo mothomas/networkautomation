@@ -5,6 +5,7 @@
 # to include that device
 supported_platforms: [junos, ios, nxos, fortios]
 
+failed_hosts: []
 
 git_token: "{{ git_pat }}"
 

@@ -58,12 +58,15 @@
       run_once: true
       delegate_to: localhost    
 
+<<<<<<< HEAD
     - ansible.builtin.set_stats:
         data:
           one_stat: 11
-          failed_hosts: "{{ file_content }}"  
+          failed_hosts_file: "{{ file_content }}"  
+          failed_hosts_list: "{{ failed_hosts }}"
       run_once: true
       delegate_to: localhost             
+
 
     - name: debug
       ansible.builtin.debug:
@@ -74,12 +77,4 @@
     - name: Backup configuration
       ansible.builtin.include_role:
         name: "../roles/notify"  
-      run_once: true    
-
-  
-      
-
- 
-      
-      
-      
+      run_once: true   

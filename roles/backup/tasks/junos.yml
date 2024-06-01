@@ -4,20 +4,27 @@
 #  junipernetworks.junos.junos_command:
 #    commands: show version
      
-    
-- name: Backup junos configuration
-  vars:
-    ansible_connection: netconf
-  junipernetworks.junos.junos_config:
-    backup: true
-    backup_options:
-      dir_path: /tmp/
-      filename: "{{ inventory_hostname }}.txt"
-  register: config_output
-  ignore_errors: yes 
+- block:
 
-- name: Log failed backup attempts
-  ansible.builtin.shell: |
-      echo "{{ inventory_hostname }} reason: failed to fetch backup, please check the backup job for exact reason" >> "{{ failed_host_list.path }}"
-  when: config_output is failed
-  delegate_to: localhost
+   - name: Backup junos configuration
+     vars:
+       ansible_connection: netconf
+     junipernetworks.junos.junos_config:
+       backup: true
+       backup_options:
+         dir_path: /tmp/
+         filename: "{{ inventory_hostname }}.txt"
+     register: config_output
+
+  rescue:
+
+   - name: collect failed hosts
+     ansible.builtin.set_facts:
+        failed_hosts: "{{ failed_hosts + [ lookup('vars', ansible_host) ] }}"
+
+  
+   - name: Log failed backup attempts
+     ansible.builtin.shell: |
+        echo "{{ inventory_hostname }} reason: failed to fetch backup, please check the backup job for exact reason" >> "{{ failed_host_list.path }}"
+     when: config_output is failed
+     delegate_to: localhost
