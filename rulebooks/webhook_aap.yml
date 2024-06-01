@@ -4,7 +4,7 @@
   sources:
     - ansible.eda.webhook:
         host: 192.168.100.30
-        port: 6000
+        port: 5000
   rules:
     - name: Say Hello
       condition: event.payload.message == "Hello"
