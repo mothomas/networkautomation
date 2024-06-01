@@ -15,13 +15,14 @@
          dir_path: /tmp/
          filename: "{{ inventory_hostname }}.txt"
      register: config_output
-
-  rescue:
+     ignore_erros: yes
 
    - name: collect failed hosts
      ansible.builtin.set_fact:
-        failed_hosts: "{{ failed_hosts + [ lookup('vars', ansible_host) ] }}"
-
+        failed_hosts: "{{ failed_hosts + [inventory_hostname] }}"     
+     when: config_output.failed
+     
+  rescue:
   
    - name: Log failed backup attempts
      ansible.builtin.shell: |
