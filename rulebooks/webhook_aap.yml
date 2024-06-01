@@ -13,7 +13,7 @@
           name: network-eda-backup
           organization: devlab
           extra_vars:
-            hosts: "{{ event.payload.hosts }}"
+            "hosts": "{{ event.payload.hosts }}"
     - name: Didn't hear Hello
       condition: event.payload.message != "Hello"
       action:
