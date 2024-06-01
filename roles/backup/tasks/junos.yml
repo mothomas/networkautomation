@@ -10,7 +10,6 @@
          dir_path: /tmp/
          filename: "{{ inventory_hostname }}.txt"
      register: config_output
-     ignore_erros: yes
 
    - name: collect failed hosts
      ansible.builtin.set_fact:
