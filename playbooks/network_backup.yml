@@ -18,7 +18,15 @@
         echo "{{ inventory_hostname }} reason: device platform not available in NetBox or not supported" >> "{{ failed_host_list.path }}"
       when: hostvars[inventory_hostname].ansible_network_os is not defined or hostvars[inventory_hostname].ansible_network_os not in supported_platforms
       delegate_to: localhost
-    
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "/backup/{{ sites | first }}/{{ device_roles | first }}"
+        state: directory
+        mode: "0755"
+      when: backupinfo is defined
+      delegate_to: localhost
+      
 
   tasks:
   
