@@ -15,7 +15,7 @@
       - "--exclude=.git"
 #  delegate_to: localhost
 
-- name: Upload | Git add the new cluster and inventory artefact
+- name: Upload | Git add the latest backup
   ansible.builtin.shell: |
     pwd && ls -lRh
     git add .
@@ -23,8 +23,7 @@
     chdir: "{{ git_temp_dir.path }}/git"
 #  delegate_to: localhost
 
-- name: Upload | Git commit the new cluster
-  ansible.builtin.shell: |
+- name: Upload | Git commit the latest backup
     git commit -m "Backup on: {{ datetime }} AAP JOB: {{ tower_job_id }}"
   args:
     chdir: "{{ git_temp_dir.path }}/git"
