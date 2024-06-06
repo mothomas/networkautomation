@@ -7,14 +7,14 @@
         port: 5050
   rules:
     - name: Say Hello
-      condition: event.payload.data.command == "/get-diff"
+      condition: event.payload.command == "/get-diff"
       action:
         run_job_template:
           name: network-eda-backup
           organization: devlab
           job_args:
             extra_vars:
-              hosts: "{{ event.payload.data.text }}"
+              hosts: "{{ event.payload.text }}"
     - name: Didn't hear Hello
       condition: event.payload.message != "Hello"
       action:
