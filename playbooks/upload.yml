@@ -45,25 +45,30 @@
     git add .
   args:
     chdir: "{{ git_temp_dir.path }}/git"
-- name: Upload | Git commit the new cluster
+    
+- name: Upload | Git commit thelatest backup
   ansible.builtin.shell: |
     git commit -m "Backup on: {{ datetime }} AAP JOB: {{ tower_job_id }}"
   args:
     chdir: "{{ git_temp_dir.path }}/git"
+    
 - name: Upload | git push the backup to main
   ansible.builtin.shell: git push --force
   args:
     chdir: "{{ git_temp_dir.path }}/git"
+    
 - name: Checkout to a new branch
   ansible.builtin.command:
     cmd: git checkout -b  {{ datetime }}
     chdir: "{{ git_temp_dir.path }}/git"
   when: on_demand is not defined
-- name: Add files to the staging area (if needed)
+  
+- name: Add files to latest backup
   ansible.builtin.command:
     cmd: git add .
     chdir: "{{ git_temp_dir.path }}/git"
   when: on_demand is not defined
+  
 - name: Upload | git push the backup to main
   ansible.builtin.shell: git push  origin {{ datetime }} --force
   args:
